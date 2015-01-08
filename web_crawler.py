@@ -19,7 +19,12 @@ def print_all_links(page):
 		else:
 			break
 
+def get_page(page):
+	import urllib2
+	source = urllib2.urlopen(page)
+	return source.read()
+
 page =('<div id="top_bin"><div id="top_content" class="width960">'
 '<div class="udacity float-left"><a href="http://udacity.com">')
-
+page = get_page("http://xkcd.com/353/")
 print_all_links(page)
