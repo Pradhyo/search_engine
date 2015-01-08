@@ -10,7 +10,16 @@ def get_next_target(page):
 	url= page[url_start+1:url_end]
 	return url, url_end
 
+def print_all_links(page):
+	while True:
+		url, end_pos = get_next_target(page)
+		if url:
+			print url
+			page = page[end_pos:]
+		else:
+			break
+
 page =('<div id="top_bin"><div id="top_content" class="width960">'
 '<div class="udacity float-left"><a href="http://udacity.com">')
-url, end_pos = get_next_target('page')
-print url
+
+print_all_links(page)
