@@ -10,14 +10,16 @@ def get_next_target(page):
 	url= page[url_start+1:url_end]
 	return url, url_end
 
-def print_all_links(page):
+def get_all_links(page):
+	links = []
 	while True:
 		url, end_pos = get_next_target(page)
 		if url:
-			print url
+			links.append(url)
 			page = page[end_pos:]
 		else:
 			break
+	return links
 
 def get_page(page):
 	import urllib2
@@ -27,4 +29,6 @@ def get_page(page):
 page =('<div id="top_bin"><div id="top_content" class="width960">'
 '<div class="udacity float-left"><a href="http://udacity.com">')
 page = get_page("http://xkcd.com/353/")
-print_all_links(page)
+links = get_all_links(page)
+for i in links:
+	print i
