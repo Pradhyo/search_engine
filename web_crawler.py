@@ -26,17 +26,17 @@ def get_page(page):
 	source = urllib2.urlopen(page)
 	return source.read()
 
-def web_crawler(seed):
+
+def web_crawler(seed, max_pages):
 	to_crawl = [seed]
 	crawled = []
 	#links = get_all_links(page)
 
-	while to_crawl:
+	while to_crawl and len(crawled)< max_pages:
 		link = to_crawl[0]
 		if link not in crawled:
-			links = get_all_links(get_page(link))
-			crawled.append(link)
-			to_crawl += links
+			to_crawl += get_all_links(get_page(link))
+			crawled.append(link)			 
 		to_crawl.remove(link)
 
 	return crawled
@@ -45,4 +45,4 @@ seed = "https://www.udacity.com/cs101x/index.html"
 '''page = get_page("http://xkcd.com/353/")
 page = get_page("https://www.udacity.com/cs101x/index.html")'''
 
-print web_crawler(seed)
+print web_crawler(seed,3)
