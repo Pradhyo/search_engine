@@ -26,20 +26,30 @@ def get_page(page):
 	source = urllib2.urlopen(page)
 	return source.read()
 
+def union(p,q):
+	"""Store the union of p and q in p"""
+	for e in q:
+		if e not in p:
+			p.append(e)
 
-def web_crawler(seed, max_pages):
+
+def web_crawler(seed, max_depth):
 	to_crawl = [seed]
 	crawled = []
-	#links = get_all_links(page)
-
-	while to_crawl and len(crawled)< max_pages:
-		link = to_crawl[0]
+	next_depth = []
+	current_depth = 0
+	
+	while to_crawl and current_depth <= max_depth:
+		link = to_crawl.pop(0)
 		if link not in crawled:
-			to_crawl += get_all_links(get_page(link))
+			union(next_depth, get_all_links(get_page(link)))
 			crawled.append(link)			 
-		to_crawl.remove(link)
+		if not to_crawl:
+			to_crawl, next_depth = next_depth, []
+			current_depth += 1
 
 	return crawled
+
 
 seed = "https://www.udacity.com/cs101x/index.html"
 '''page = get_page("http://xkcd.com/353/")
