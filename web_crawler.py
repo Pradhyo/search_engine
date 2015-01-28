@@ -2,6 +2,7 @@
 
 
 def get_next_target(page):
+	"""Return starting and ending positions of next url in 'page'"""
 	start_link = page.find('<a href=')
 	if start_link == -1:
 		return None,0
@@ -11,6 +12,7 @@ def get_next_target(page):
 	return url, url_end
 
 def get_all_links(page):
+	"""Return all urls in 'page' as a list"""
 	links = []
 	while True:
 		url, end_pos = get_next_target(page)
@@ -22,6 +24,7 @@ def get_all_links(page):
 	return links
 
 def get_page(page):
+	"""Return the content of 'page' as a string"""
 	import urllib2
 	source = urllib2.urlopen(page)
 	return source.read()
@@ -34,6 +37,8 @@ def union(p,q):
 
 
 def web_crawler(seed, max_depth):
+	"""Return all crawled links starting with seed page never 
+	exceeding max_depth number of links"""
 	to_crawl = [seed]
 	crawled = []
 	next_depth = []
