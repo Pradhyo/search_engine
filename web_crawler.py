@@ -38,21 +38,26 @@ def union(p,q):
 
 
 def add_to_index(index,keyword,url):
-    """Add keyword and correspoding url to index"""
-    for entry in index: 
-        if keyword == entry[0]:
-            entry[1].append(url)
-            return index
-    index.append([keyword,[url]])
+	"""Add keyword and correspoding url to index"""
+	for entry in index: 
+		if keyword == entry[0]:
+			entry[1].append(url)
+			return index
+	index.append([keyword,[url]])
 
 def lookup(index,keyword):
 	"""Lookup keyword in index and return correspoding urls """
-    for entry in index:
-        if keyword == entry[0]:
-            return entry[1]
-    return []
+	for entry in index:
+		if keyword == entry[0]:
+			return entry[1]
+	return []
 
-    
+def add_page_to_index(index,url,content):
+	"""Add given content as correspoding to given url into index """
+	keywords = content.split()
+	for keyword in keywords:
+		add_to_index(index,keyword,url)
+	
 
 def web_crawler(seed, max_depth):
 	"""Return all crawled links starting with seed page never 
