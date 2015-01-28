@@ -1,5 +1,6 @@
 # Build a web crawler
 
+index = []
 
 def get_next_target(page):
 	"""Return starting and ending positions of next url in 'page'"""
@@ -35,6 +36,15 @@ def union(p,q):
 		if e not in p:
 			p.append(e)
 
+
+def add_to_index(index,keyword,url):
+    """Add keyword and correspoding url to index"""
+    for entry in index: 
+        if keyword == entry[0]:
+            entry[1].append(url)
+            return index
+    index.append([keyword,[url]])
+    
 
 def web_crawler(seed, max_depth):
 	"""Return all crawled links starting with seed page never 
