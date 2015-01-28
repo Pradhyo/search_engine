@@ -66,11 +66,13 @@ def web_crawler(seed, max_depth):
 	crawled = []
 	next_depth = []
 	current_depth = 0
-	
+		
 	while to_crawl and current_depth <= max_depth:
 		link = to_crawl.pop(0)
 		if link not in crawled:
-			union(next_depth, get_all_links(get_page(link)))
+			content = get_page(link)
+			add_page_to_index(index, link, content)
+			union(next_depth, get_all_links(content))
 			crawled.append(link)			 
 		if not to_crawl:
 			to_crawl, next_depth = next_depth, []
@@ -84,3 +86,4 @@ seed = "https://www.udacity.com/cs101x/index.html"
 page = get_page("https://www.udacity.com/cs101x/index.html")'''
 
 print web_crawler(seed,3)
+print lookup(index,"crawl")
