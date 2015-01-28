@@ -44,6 +44,14 @@ def add_to_index(index,keyword,url):
             entry[1].append(url)
             return index
     index.append([keyword,[url]])
+
+def lookup(index,keyword):
+	"""Lookup keyword in index and return correspoding urls """
+    for entry in index:
+        if keyword == entry[0]:
+            return entry[1]
+    return []
+
     
 
 def web_crawler(seed, max_depth):
