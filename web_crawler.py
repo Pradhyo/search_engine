@@ -40,7 +40,8 @@ def union(p,q):
 def add_to_index(index,keyword,url):
 	"""Add keyword and correspoding url to index"""
 	if keyword in index:
-		index[keyword].append(url)
+		if url not in index[keyword]:
+			index[keyword].append(url)
 	else:
 		index[keyword] = [url]
 
@@ -84,4 +85,4 @@ seed = "https://www.udacity.com/cs101x/index.html"
 page = get_page("https://www.udacity.com/cs101x/index.html")'''
 
 print web_crawler(seed,3)
-print lookup(index,"crawl")
+print lookup(index,"a")
