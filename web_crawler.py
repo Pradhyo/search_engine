@@ -1,6 +1,6 @@
 # Build a web crawler
 
-index = []
+index = {}
 
 def get_next_target(page):
 	"""Return starting and ending positions of next url in 'page'"""
@@ -39,18 +39,16 @@ def union(p,q):
 
 def add_to_index(index,keyword,url):
 	"""Add keyword and correspoding url to index"""
-	for entry in index: 
-		if keyword == entry[0]:
-			entry[1].append(url)
-			return index
-	index.append([keyword,[url]])
+	if keyword in index:
+		index[keyword].append(url)
+	else:
+		index[keyword] = [url]
 
 def lookup(index,keyword):
 	"""Lookup keyword in index and return correspoding urls """
-	for entry in index:
-		if keyword == entry[0]:
-			return entry[1]
-	return []
+	if keyword in index:
+		return index[keyword]
+	return None
 
 def add_page_to_index(index,url,content):
 	"""Add given content as correspoding to given url into index """
