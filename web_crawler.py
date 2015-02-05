@@ -1,5 +1,6 @@
 # Build a web crawler
 
+import string
 index = {}
 
 def get_next_target(page):
@@ -51,9 +52,17 @@ def lookup(index,keyword):
 		return index[keyword]
 	return None
 
+def split_string(source,splitlist):
+	"""Better split function to extract keywords from a page"""
+	spaces = " " * len(splitlist)
+	transtable = string.maketrans(splitlist, spaces)
+	source = string.translate(source, transtable)
+	return source.split()
+
+
 def add_page_to_index(index,url,content):
 	"""Add given content as correspoding to given url into index """
-	keywords = content.split()
+	keywords = split_string(content,".,-!<>/=\"")
 	for keyword in keywords:
 		add_to_index(index,keyword,url)
 	
