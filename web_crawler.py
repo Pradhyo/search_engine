@@ -2,6 +2,7 @@
 
 import string
 index = {}
+graph = {}
 
 def get_next_target(page):
 	"""Return starting and ending positions of next url in 'page'"""
@@ -80,18 +81,23 @@ def web_crawler(seed, max_depth):
 		if link not in crawled:
 			content = get_page(link)
 			add_page_to_index(index, link, content)
-			union(next_depth, get_all_links(content))
+			outlinks = get_all_links(content)
+			if link not in graph:
+				graph[link] = outlinks
+			else:
+				graph[link] += outlinks
+			union(next_depth, outlinks)
 			crawled.append(link)			 
 		if not to_crawl:
 			to_crawl, next_depth = next_depth, []
 			current_depth += 1
 
-	return crawled
+	return index, graph
 
 
 seed = "https://www.udacity.com/cs101x/index.html"
 '''page = get_page("http://xkcd.com/353/")
 page = get_page("https://www.udacity.com/cs101x/index.html")'''
 
-print web_crawler(seed,3)
+print web_crawler(seed,3)[1]
 print lookup(index,"a")
