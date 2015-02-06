@@ -67,6 +67,24 @@ def add_page_to_index(index,url,content):
 	for keyword in keywords:
 		add_to_index(index,keyword,url)
 	
+def rank_pages(graph):
+	damping_factor = 0.8
+	loops = 10
+	ranks = {}
+
+	npages = len(graph)
+	for page in graph:
+		ranks[page] = 1.0 / npages
+
+	for i in range(0):
+		newranks = {}
+		for page in graph:
+			newrank = (1 - d) / npages
+
+			newranks[page] = newrank
+		ranks = newranks
+	return ranks
+
 
 def web_crawler(seed, max_depth):
 	"""Return all crawled links starting with seed page never 
@@ -82,10 +100,7 @@ def web_crawler(seed, max_depth):
 			content = get_page(link)
 			add_page_to_index(index, link, content)
 			outlinks = get_all_links(content)
-			if link not in graph:
-				graph[link] = outlinks
-			else:
-				graph[link] += outlinks
+			graph[link] = outlinks
 			union(next_depth, outlinks)
 			crawled.append(link)			 
 		if not to_crawl:
